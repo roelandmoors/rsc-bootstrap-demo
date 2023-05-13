@@ -3,6 +3,14 @@ https://dev.to/roeland/combine-bootstrap-5-with-headless-ui-in-react-server-comp
 
 # Combine Bootstrap 5 with Headless UI in React Server Components
 
+I was looking for a CSS framework that could be used for React and server side rendering. Tailwind is the most used option, but sometimes I just want to use some existing components to get started more quickly. But most React frameworks don't really work yet with server rendering.
+
+A very good CSS framework already exists, [Bootstrap](https://getbootstrap.com/). Why not use that?
+
+The javascript part of Bootstrap is not very composable with React, but there is also a good existing framework for React Components, [Headless UI](https://headlessui.com/).
+
+The instructions below are for combining those in Next.js. I use plain Bootstrap classes for server rendering and Headless UI for more complex client components.
+
 ## Install Next.js 13 with Bootstrap 5
 
 First install Next.js:
@@ -115,12 +123,12 @@ export default function Home() {
 }
 ```
 
-You should now get an error:
+Now you get an error:
 `You're importing a component that imports client-only. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.`
 
 The solution is easy. Add `"use client";` at the top of `components/Accordion.jsx`
 
-You should have a working accordion now, but not themed.
+You have a working accordion now, but not themed.
 
 ## Theming the accordion
 
@@ -244,6 +252,6 @@ export default function Accordion() {
 
 You should now have something like this:
 
-![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sgiedsooph3oqjzgg34e.png)
+![Image of the final result](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sgiedsooph3oqjzgg34e.png)
 
 You can find the final code [here](https://github.com/roelandmoors/rsc-bootstrap-demo)
