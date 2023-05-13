@@ -65,3 +65,84 @@ You now have a bootstrap button with an ugly custom color
 ## Headless UI
 
 `npm install @headlessui/react`
+
+https://headlessui.com/react/disclosure
+
+https://getbootstrap.com/docs/5.3/components/accordion/
+
+create new file `components/Accordion.jsx`
+components is new folder in the root
+
+Let's add the example from the Headless UI website:
+
+```jsx
+import { Disclosure } from "@headlessui/react";
+
+export default function Accordion() {
+  return (
+    <Disclosure>
+      <Disclosure.Button className="py-2">
+        Is team pricing available?
+      </Disclosure.Button>
+      <Disclosure.Panel className="text-gray-500">
+        Yes! You can purchase a license that you can share with your entire
+        team.
+      </Disclosure.Panel>
+    </Disclosure>
+  );
+}
+```
+
+Now in `app/page.jsx` use this new component:
+
+```jsx
+import Accordion from "@/components/Accordion";
+
+export default function Home() {
+  return (
+    <>
+      <button className="btn btn-primary">Bootstrap button</button>
+      <Accordion />
+    </>
+  );
+}
+```
+
+You should now get an error:
+`You're importing a component that imports client-only. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.`
+
+The solution is easy. Add `"use client";` at the top of `components/Accordion.jsx`
+
+You should have a working accordion now, but not themed.
+
+## Theme accordion
+
+Add bootstrap classes:
+
+```jsx
+"use client";
+
+import { Disclosure } from "@headlessui/react";
+
+export default function Accordion() {
+  return (
+    <div className="accordion">
+      <Disclosure>
+        <div className="accordion-item">
+          <h2 className="accordion-header">
+            <Disclosure.Button className="accordion-button">
+              Is team pricing available?
+            </Disclosure.Button>
+          </h2>
+          <Disclosure.Panel className="accordion-collapse">
+            <div className="accordion-body">
+              Yes! You can purchase a license that you can share with your
+              entire team.
+            </div>
+          </Disclosure.Panel>
+        </div>
+      </Disclosure>
+    </div>
+  );
+}
+```
