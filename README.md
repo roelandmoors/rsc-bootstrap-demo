@@ -1,34 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Combine Bootstrap 5 with Headless UI in React Server Components
 
-## Getting Started
+## Init Next.js 13 with Bootstrap 5
 
-First, run the development server:
+`npx create-next-app@latest`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+![Nextjs Installation](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/grkawkpehr1gmun166pw.png)
+
+`npm install bootstrap`
+
+Next.js has [support](https://nextjs.org/docs/app/building-your-application/styling/sass) for sass.
+
+`npm install --save-dev sass`
+
+Add sassOptions
+
+```js
+const path = require("path");
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  sassOptions: {
+    includePaths: [path.join(__dirname, "styles")],
+  },
+};
+
+module.exports = nextConfig;
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+styles folder
+bootstrap.scss
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```scss
+$theme-colors: (
+  "primary": #7a45d0bf,
+);
+@import "/node_modules/bootstrap/scss/bootstrap.scss";
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+$theme-colors for override bootstrap default values
 
-## Learn More
+app/layout.js
 
-To learn more about Next.js, take a look at the following resources:
+```js
+import "../styles/bootstrap.scss";
+import "./globals.css";
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Remove or clear `app/globals.css` and `app/page.module.css`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Replace the content of `app/page.js` with
 
-## Deploy on Vercel
+```jsx
+export default function Home() {
+  return (
+    <>
+      <button className="btn btn-primary">Bootstrap button</button>
+    </>
+  );
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+You now have a bootstrap button with an ugly custom color
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Headless UI
+
+`npm install @headlessui/react`
