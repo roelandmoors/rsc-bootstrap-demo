@@ -34,10 +34,12 @@ bootstrap.scss
 $theme-colors: (
   "primary": #7a45d0bf,
 );
+$enable-cssgrid: true;
 @import "/node_modules/bootstrap/scss/bootstrap.scss";
 ```
 
-$theme-colors for override bootstrap default values
+`$theme-colors` for overriding bootstrap default values
+`$enable-cssgrid: true;` for https://getbootstrap.com/docs/5.3/layout/css-grid/#how-it-works
 
 app/layout.js
 
@@ -53,14 +55,14 @@ Replace the content of `app/page.js` with
 ```jsx
 export default function Home() {
   return (
-    <>
+    <div className="container grid gap-3 mt-3">
       <button className="btn btn-primary">Bootstrap button</button>
-    </>
+    </div>
   );
 }
 ```
 
-You now have a bootstrap button with an ugly custom color
+You now have a bootstrap button with a custom color
 
 ## Headless UI
 
@@ -100,10 +102,12 @@ import Accordion from "@/components/Accordion";
 
 export default function Home() {
   return (
-    <>
-      <button className="btn btn-primary">Bootstrap button</button>
-      <Accordion />
-    </>
+    <div className="container grid gap-3 mt-3">
+      <button className="btn btn-primary g-col-12">Bootstrap button</button>
+      <div className="g-col-12">
+        <Accordion />
+      </div>
+    </div>
   );
 }
 ```
