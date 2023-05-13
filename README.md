@@ -1,18 +1,20 @@
 # Combine Bootstrap 5 with Headless UI in React Server Components
 
-## Init Next.js 13 with Bootstrap 5
+## Install Next.js 13 with Bootstrap 5
 
+First install Next.js:
 `npx create-next-app@latest`
 
 ![Nextjs Installation](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/grkawkpehr1gmun166pw.png)
 
+Now add bootstrap:
 `npm install bootstrap`
 
 Next.js has [support](https://nextjs.org/docs/app/building-your-application/styling/sass) for sass.
 
 `npm install --save-dev sass`
 
-Add sassOptions
+Create a `styles` folder in the root and add `sassOptions` in `next.config.js`:
 
 ```js
 const path = require("path");
@@ -27,8 +29,7 @@ const nextConfig = {
 module.exports = nextConfig;
 ```
 
-styles folder
-bootstrap.scss
+In that styles folder create a new file `bootstrap.scss` with content like this:
 
 ```scss
 $theme-colors: (
@@ -38,19 +39,19 @@ $enable-cssgrid: true;
 @import "/node_modules/bootstrap/scss/bootstrap.scss";
 ```
 
-`$theme-colors` for overriding bootstrap default values
-`$enable-cssgrid: true;` for https://getbootstrap.com/docs/5.3/layout/css-grid/#how-it-works
+`$theme-colors` is for overriding bootstrap default colors.
+`$enable-cssgrid: true;` for the [new grid system](https://getbootstrap.com/docs/5.3/layout/css-grid/#how-it-works)
 
-app/layout.js
+Let's use bootstrap now. Import the new stylesheets in `app/layout.js`.
 
 ```js
 import "../styles/bootstrap.scss";
 import "./globals.css";
 ```
 
-Remove or clear `app/globals.css` and `app/page.module.css`
+Remove the existing styles in `app/globals.css` and `app/page.module.css`.
 
-Replace the content of `app/page.js` with
+Now replace the content of `app/page.js` with this:
 
 ```jsx
 export default function Home() {
@@ -66,14 +67,13 @@ You now have a bootstrap button with a custom color
 
 ## Headless UI
 
+Add Headless UI now:
 `npm install @headlessui/react`
 
-https://headlessui.com/react/disclosure
+As an example I will implement [the bootstrap accordion](https://getbootstrap.com/docs/5.3/components/accordion/) with the [disclosure](https://headlessui.com/react/disclosure) from Headless UI.
 
-https://getbootstrap.com/docs/5.3/components/accordion/
-
-create new file `components/Accordion.jsx`
-components is new folder in the root
+Create a new file `components/Accordion.jsx`
+`components` is new folder in the root folder.
 
 Let's add the example from the Headless UI website:
 
@@ -119,7 +119,7 @@ The solution is easy. Add `"use client";` at the top of `components/Accordion.js
 
 You should have a working accordion now, but not themed.
 
-## Theme accordion
+## Theming the accordion
 
 Add bootstrap classes:
 
@@ -151,9 +151,9 @@ export default function Accordion() {
 }
 ```
 
-It now works a bit, but the arrow is not changing.
+It now works a bit, but the arrow is not changing on opening/collapsing.
 
-Add open prop:
+Whe can use the `open` [render prop](https://headlessui.com/react/disclosure#using-render-props) for this:
 
 ```jsx
 "use client";
@@ -186,3 +186,59 @@ export default function Accordion() {
   );
 }
 ```
+
+This works. Now add an extra disclosure for the final result:
+
+```jsx
+"use client";
+
+import { Disclosure } from "@headlessui/react";
+
+export default function Accordion() {
+  return (
+    <div className="accordion">
+      <Disclosure>
+        {({ open }) => (
+          <div className="accordion-item">
+            <h2 className="accordion-header">
+              <Disclosure.Button
+                className={`accordion-button ${open ? "" : "collapsed"}`}
+              >
+                First item
+              </Disclosure.Button>
+            </h2>
+            <Disclosure.Panel className="accordion-collapse">
+              <div className="accordion-body">
+                This is the content of the first item.
+              </div>
+            </Disclosure.Panel>
+          </div>
+        )}
+      </Disclosure>
+
+      <Disclosure>
+        {({ open }) => (
+          <div className="accordion-item">
+            <h2 className="accordion-header">
+              <Disclosure.Button
+                className={`accordion-button ${open ? "" : "collapsed"}`}
+              >
+                Second item
+              </Disclosure.Button>
+            </h2>
+            <Disclosure.Panel className="accordion-collapse">
+              <div className="accordion-body">
+                This is the content of the second item.
+              </div>
+            </Disclosure.Panel>
+          </div>
+        )}
+      </Disclosure>
+    </div>
+  );
+}
+```
+
+You should now have something like this:
+
+![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sgiedsooph3oqjzgg34e.png)
