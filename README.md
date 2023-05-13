@@ -146,3 +146,39 @@ export default function Accordion() {
   );
 }
 ```
+
+It now works a bit, but the arrow is not changing.
+
+Add open prop:
+
+```jsx
+"use client";
+
+import { Disclosure } from "@headlessui/react";
+
+export default function Accordion() {
+  return (
+    <div className="accordion">
+      <Disclosure>
+        {({ open }) => (
+          <div className="accordion-item">
+            <h2 className="accordion-header">
+              <Disclosure.Button
+                className={`accordion-button ${open ? "" : "collapsed"}`}
+              >
+                Is team pricing available?
+              </Disclosure.Button>
+            </h2>
+            <Disclosure.Panel className="accordion-collapse">
+              <div className="accordion-body">
+                Yes! You can purchase a license that you can share with your
+                entire team.
+              </div>
+            </Disclosure.Panel>
+          </div>
+        )}
+      </Disclosure>
+    </div>
+  );
+}
+```
