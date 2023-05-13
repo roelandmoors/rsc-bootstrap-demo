@@ -1,3 +1,6 @@
+Demo code for this article:
+https://dev.to/roeland/combine-bootstrap-5-with-headless-ui-in-react-server-components-4h86
+
 # Combine Bootstrap 5 with Headless UI in React Server Components
 
 ## Install Next.js 13 with Bootstrap 5
@@ -63,7 +66,7 @@ export default function Home() {
 }
 ```
 
-You now have a bootstrap button with a custom color
+You now have a bootstrap button with a custom color.
 
 ## Headless UI
 
@@ -72,8 +75,8 @@ Add Headless UI now:
 
 As an example I will implement [the bootstrap accordion](https://getbootstrap.com/docs/5.3/components/accordion/) with the [disclosure](https://headlessui.com/react/disclosure) from Headless UI.
 
-Create a new file `components/Accordion.jsx`
-`components` is new folder in the root folder.
+Create a new file `components/Accordion.jsx`,
+`components` is a new folder in the root folder.
 
 Let's add the example from the Headless UI website:
 
@@ -151,7 +154,7 @@ export default function Accordion() {
 }
 ```
 
-It now works a bit, but the arrow is not changing on opening/collapsing.
+It kind of works, but the arrow is not changing on opening/collapsing.
 
 Whe can use the `open` [render prop](https://headlessui.com/react/disclosure#using-render-props) for this:
 
@@ -242,3 +245,5 @@ export default function Accordion() {
 You should now have something like this:
 
 ![Image description](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/sgiedsooph3oqjzgg34e.png)
+
+You can find the final code [here](https://github.com/roelandmoors/rsc-bootstrap-demo)
